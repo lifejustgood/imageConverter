@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="JFIF\" />
+    <Folder Include="PNG\" />
     <Folder Include="Output\" />
   </ItemGroup>
 

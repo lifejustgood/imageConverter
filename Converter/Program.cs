@@ -12,13 +12,27 @@ namespace Converter
     {
         static void Main(string[] args)
         {
-            var settings = new Settings();
-            var converter = new ImageConverter();
+            try
+            {
+                var settings = new Settings();
 
-            var path = settings.GetFilePathValues();
-            var format = settings.GetFileFormats();
+                var path = settings.GetFilePathValues();
+                var format = settings.GetFileFormats();
 
-            converter.ConvertImagesToGif(path.pathToLoad, path.pathToSave, format);
+                ImageConverter.ConvertImagesToGif(path.pathToLoad, path.pathToSave, format);
+            }
+            // pattern matching
+            catch (Exception e)
+            {
+                /*switch(e)
+
+                {
+                    case e is PathToOpenEmptyException:
+                }*/
+                    
+
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

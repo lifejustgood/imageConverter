@@ -8,9 +8,9 @@ using ImageMagick;
 
 namespace Converter
 {
-    class ImageConverter
+    public static class ImageConverter
     {
-        public void ConvertImagesToGif(string pathToLoad, string pathToSave, string imageFormats)
+        public static void ConvertImagesToGif(string pathToLoad, string pathToSave, string imageFormats)
         {
             using (MagickImageCollection collection = new MagickImageCollection())
             {
@@ -21,10 +21,12 @@ namespace Converter
                     throw new Exception($"There are no files in folder with {imageFormats} extensions");
                 }
 
-                files.ForEach(elem => collection.Add(elem));
-
-                collection.ToList().ForEach(r => r.AnimationDelay = 50);
-
+                files.ForEach(elem =>
+                {
+                    var image = new MagickImage(elem) {AnimationDelay = 50};
+                    collection.Add(image);
+                });
+                
                 // Optionally reduce colors
                 var settings = new QuantizeSettings { Colors = 256 };
                 collection.Quantize(settings);
@@ -39,7 +41,7 @@ namespace Converter
             }
         }
 
-        private MagickImageCollection ResizeImages(MagickImageCollection collection, int imageSize = 800)
+        private static MagickImageCollection ResizeImages(MagickImageCollection collection, int imageSize = 800)
         {
             collection.Coalesce();
 
